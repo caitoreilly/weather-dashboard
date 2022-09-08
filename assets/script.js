@@ -23,6 +23,7 @@ function getCurrent(city) {
       console.log(data);
       var lon = data.coord.lon;
       var lat = data.coord.lat;
+      console.log(lon, lat);
       displayCurrent(data);
       getForecast(lon, lat);
     });
@@ -65,10 +66,13 @@ function displayCurrent(data) {
 // display future conditions for city in 5-day forecast (make 5 cards, one for each day)
 function getForecast(lon, lat) {
   var requestUrlForecast =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    "https://api.openweathermap.org/data/2.5/forecast?" +
+    "lon=" +
     lon +
+    "&lat=" +
     lat +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
+  console.log(lon, lat);
   console.log(requestUrlForecast);
   fetch(requestUrlForecast)
     .then(function (response) {
