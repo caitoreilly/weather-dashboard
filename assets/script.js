@@ -124,11 +124,26 @@ function displayForecast(data) {
     futureHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
     futureWind.textContent = `Wind Speed: ${data.list[i].wind.speed} MPH`;
 
-    // append info to cards 
+    // append info to cards
     forecastCardBody1.append(futureTemp, futureHumidity, futureWind);
     forecastCard1.append(forecastCardBody1);
     forecastContainer.append(forecastCard1);
-    console.log(displayForecast);
+
+    forecastCardBody2.append(futureTemp, futureHumidity, futureWind);
+    forecastCard2.append(forecastCardBody2);
+    forecastContainer.append(forecastCard2);
+
+    forecastCardBody3.append(futureTemp, futureHumidity, futureWind);
+    forecastCard3.append(forecastCardBody3);
+    forecastContainer.append(forecastCard3);
+
+    forecastCardBody4.append(futureTemp, futureHumidity, futureWind);
+    forecastCard4.append(forecastCardBody4);
+    forecastContainer.append(forecastCard4);
+
+    forecastCardBody5.append(futureTemp, futureHumidity, futureWind);
+    forecastCard5.append(forecastCardBody5);
+    forecastContainer.append(forecastCard5);
   }
 }
 
