@@ -88,30 +88,14 @@ function getForecast(lon, lat) {
 // for loop to display only for next 5 days
 function displayForecast(data) {
   // for loop to only call next 5 days (not all 40)
+  var forecastContainer = document.querySelector(".forecast-info");
 
   for (let i = 0; i < 5; i++) {
-    var forecastContainer = document.querySelector(".forecast-info");
     // create 5 cards
     var forecastCard1 = document.createElement("div");
     forecastCard1.setAttribute("class", "forecast-card");
     var forecastCardBody1 = document.createElement("div");
     forecastCardBody1.setAttribute("class", "forecast-body");
-    var forecastCard2 = document.createElement("div");
-    forecastCard2.setAttribute("class", "forecast-card");
-    var forecastCardBody2 = document.createElement("div");
-    forecastCardBody2.setAttribute("class", "forecast-body");
-    var forecastCard3 = document.createElement("div");
-    forecastCard3.setAttribute("class", "forecast-card");
-    var forecastCardBody3 = document.createElement("div");
-    forecastCardBody3.setAttribute("class", "forecast-body");
-    var forecastCard4 = document.createElement("div");
-    forecastCard4.setAttribute("class", "forecast-card");
-    var forecastCardBody4 = document.createElement("div");
-    forecastCardBody4.setAttribute("class", "forecast-body");
-    var forecastCard5 = document.createElement("div");
-    forecastCard5.setAttribute("class", "forecast-card");
-    var forecastCardBody5 = document.createElement("div");
-    forecastCardBody5.setAttribute("class", "forecast-body");
 
     var futureTemp = document.createElement("p");
     futureTemp.setAttribute("class", "weatherEl");
@@ -129,21 +113,7 @@ function displayForecast(data) {
     forecastCard1.append(forecastCardBody1);
     forecastContainer.append(forecastCard1);
 
-    forecastCardBody2.append(futureTemp, futureHumidity, futureWind);
-    forecastCard2.append(forecastCardBody2);
-    forecastContainer.append(forecastCard2);
-
-    forecastCardBody3.append(futureTemp, futureHumidity, futureWind);
-    forecastCard3.append(forecastCardBody3);
-    forecastContainer.append(forecastCard3);
-
-    forecastCardBody4.append(futureTemp, futureHumidity, futureWind);
-    forecastCard4.append(forecastCardBody4);
-    forecastContainer.append(forecastCard4);
-
-    forecastCardBody5.append(futureTemp, futureHumidity, futureWind);
-    forecastCard5.append(forecastCardBody5);
-    forecastContainer.append(forecastCard5);
+    console.log(data.list[i]);
   }
 }
 

@@ -7,3 +7,12 @@
     color: white;
 
 }
+
+.forecast-card {
+    border: 2px solid black;
+}
+
+.forecast-info {
+    display: flex;
+    flex-wrap: wrap;
+}
