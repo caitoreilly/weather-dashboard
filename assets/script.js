@@ -78,9 +78,58 @@ function getForecast(lon, lat) {
     .then(function (response) {
       return response.json();
     })
-    .then((future) => {
-      console.log(future);
+    .then((data) => {
+      console.log(data);
+      displayForecast(data);
     });
+}
+// function to display forecast info & create cards for 5-day forecast w/ information on each card
+// display date, icon of weather, temp, wind speed, humidity
+// for loop to display only for next 5 days
+function displayForecast(data) {
+  // for loop to only call next 5 days (not all 40)
+
+  for (let i = 0; i < 5; i++) {
+    var forecastContainer = document.querySelector(".forecast-info");
+    // create 5 cards
+    var forecastCard1 = document.createElement("div");
+    forecastCard1.setAttribute("class", "forecast-card");
+    var forecastCardBody1 = document.createElement("div");
+    forecastCardBody1.setAttribute("class", "forecast-body");
+    var forecastCard2 = document.createElement("div");
+    forecastCard2.setAttribute("class", "forecast-card");
+    var forecastCardBody2 = document.createElement("div");
+    forecastCardBody2.setAttribute("class", "forecast-body");
+    var forecastCard3 = document.createElement("div");
+    forecastCard3.setAttribute("class", "forecast-card");
+    var forecastCardBody3 = document.createElement("div");
+    forecastCardBody3.setAttribute("class", "forecast-body");
+    var forecastCard4 = document.createElement("div");
+    forecastCard4.setAttribute("class", "forecast-card");
+    var forecastCardBody4 = document.createElement("div");
+    forecastCardBody4.setAttribute("class", "forecast-body");
+    var forecastCard5 = document.createElement("div");
+    forecastCard5.setAttribute("class", "forecast-card");
+    var forecastCardBody5 = document.createElement("div");
+    forecastCardBody5.setAttribute("class", "forecast-body");
+
+    var futureTemp = document.createElement("p");
+    futureTemp.setAttribute("class", "weatherEl");
+    var futureHumidity = document.createElement("p");
+    futureHumidity.setAttribute("class", "weatherEl");
+    var futureWind = document.createElement("p");
+    futureWind.setAttribute("class", "weatherEl");
+    futureTemp.textContent = `Temperature: ${data.list[i].main.temp}`;
+    console.log(futureTemp);
+    futureHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
+    futureWind.textContent = `Wind Speed: ${data.list[i].wind.speed} MPH`;
+
+    // append info to cards 
+    forecastCardBody1.append(futureTemp, futureHumidity, futureWind);
+    forecastCard1.append(forecastCardBody1);
+    forecastContainer.append(forecastCard1);
+    console.log(displayForecast);
+  }
 }
 
 // city added to search history (list)
@@ -107,4 +156,4 @@ set the array to local storage */
 //     localStorage.setItem("city", JSON.stringify(savedCities));
 
 // }
-//function to display the array to the page
+//function to display the array to the page (append)
