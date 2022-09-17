@@ -2,6 +2,7 @@ var city = "";
 var savedCities = [];
 var fetchButton = document.getElementById("fetch-button");
 var currentDateElement = document.getElementById("current-date");
+var searchListElement = document.getElementById("search-list");
 
 // current day displayed in current search results box
 var rightNow = moment().format("MMMM Do, YYYY");
@@ -126,19 +127,34 @@ fetchButton.addEventListener("click", (event) => {
   var userInput = document.querySelector(".search-city").value;
   console.log(userInput);
   getCurrent(userInput);
+  savedCities.push(userInput);
+  saveCity();
 });
 /*push the city into the array
     display the city list
     run the save city function*/
-//   savedCities.push(city);
-//   saveCity();
-// });
 
 /* save city function that uses saved city list array as parameter and 
 set the array to local storage */
 
-// const saveCity = function(savedCities) {
-//     localStorage.setItem("city", JSON.stringify(savedCities));
+var saveCity = function () {
+  localStorage.setItem("city", JSON.stringify(savedCities));
 
-// }
+  savedCities = JSON.parse(localStorage.getItem("city")) || [];
+
+  for (var i = 0; i < savedCities.length; i++) {
+    displayCitySearch(savedCities[i]);
+  }
+
+  displayCitySearch();
+};
+
 //function to display the array to the page (append)
+
+var displayCitySearch = function () {
+  var listItem = document.createElement("li");
+  listItem.className = "list-item";
+  listItem.textContent = document.querySelector(".search-city").value;
+  searchListElement.append(listItem);
+  console.log(listItem);
+};
