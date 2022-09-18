@@ -6,7 +6,7 @@ var searchListElement = document.getElementById("search-list");
 
 // current day displayed in current search results box
 var rightNow = moment().format("MMMM Do, YYYY");
-console.log(rightNow);
+
 currentDateElement.textContent = rightNow;
 
 // type city and click search button --> get current conditions for city from weather API
@@ -15,16 +15,17 @@ function getCurrent(city) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
-  console.log(requestUrlCurrent);
+  
   fetch(requestUrlCurrent)
     .then(function (response) {
       return response.json();
     })
     .then((data) => {
       console.log(data);
+      
       var lon = data.coord.lon;
       var lat = data.coord.lat;
-      console.log(lon, lat);
+      
       displayCurrent(data);
       getForecast(lon, lat);
     });
@@ -37,6 +38,7 @@ function displayCurrent(data) {
   currentCityEl.textContent = data.name;
   // code to display weather icon
   var icon = document.querySelector("#weather-icon");
+  icon.innerHTML = "";
   var iconImg = document.createElement("img");
   iconImg.setAttribute(
     "src",
@@ -45,6 +47,7 @@ function displayCurrent(data) {
   icon.append(iconImg);
   // code to create and display current weather info
   var weatherContainer = document.querySelector(".city-info");
+  weatherContainer.innerHTML = "";
   var card = document.createElement("div");
   card.setAttribute("class", "card");
   var cardBody = document.createElement("div");
@@ -73,8 +76,7 @@ function getForecast(lon, lat) {
     "&lat=" +
     lat +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
-  console.log(lon, lat);
-  console.log(requestUrlForecast);
+
   fetch(requestUrlForecast)
     .then(function (response) {
       return response.json();
@@ -90,6 +92,7 @@ function getForecast(lon, lat) {
 function displayForecast(data) {
   // for loop to only call next 5 days (not all 40)
   var forecastContainer = document.querySelector(".forecast-info");
+  forecastContainer.innerHTML = "";
 
   for (let i = 0; i < 5; i++) {
     // create 5 cards
@@ -105,7 +108,7 @@ function displayForecast(data) {
     var futureWind = document.createElement("p");
     futureWind.setAttribute("class", "weatherEl");
     futureTemp.textContent = `Temperature: ${data.list[i].main.temp}`;
-    console.log(futureTemp);
+
     futureHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
     futureWind.textContent = `Wind Speed: ${data.list[i].wind.speed} MPH`;
 
@@ -113,8 +116,6 @@ function displayForecast(data) {
     forecastCardBody1.append(futureTemp, futureHumidity, futureWind);
     forecastCard1.append(forecastCardBody1);
     forecastContainer.append(forecastCard1);
-
-    console.log(data.list[i]);
   }
 }
 
@@ -125,10 +126,11 @@ function displayForecast(data) {
 fetchButton.addEventListener("click", (event) => {
   event.preventDefault();
   var userInput = document.querySelector(".search-city").value;
-  console.log(userInput);
+
   getCurrent(userInput);
-  savedCities.push(userInput);
-  saveCity();
+  // savedCities.push(userInput);
+  saveCity(userInput);
+  displayCitySearch(userInput);
 });
 /*push the city into the array
     display the city list
@@ -137,24 +139,40 @@ fetchButton.addEventListener("click", (event) => {
 /* save city function that uses saved city list array as parameter and 
 set the array to local storage */
 
-var saveCity = function () {
-  localStorage.setItem("city", JSON.stringify(savedCities));
+var saveCity = function (userInput) {
+  // localStorage.setItem("city", JSON.stringify(savedCities));
 
   savedCities = JSON.parse(localStorage.getItem("city")) || [];
-
-  for (var i = 0; i < savedCities.length; i++) {
-    displayCitySearch(savedCities[i]);
-  }
-
-  displayCitySearch();
+  savedCities.push(userInput);
+  localStorage.setItem("city", JSON.stringify(savedCities));
+  // for (var i = 0; i < savedCities.length; i++) {
+  //   displayCitySearch(savedCities[i]);
+  // }
 };
 
 //function to display the array to the page (append)
 
-var displayCitySearch = function () {
+var displayCitySearch = function (city) {
   var listItem = document.createElement("li");
   listItem.className = "list-item";
-  listItem.textContent = document.querySelector(".search-city").value;
+  listItem.textContent = city;
   searchListElement.append(listItem);
-  console.log(listItem);
 };
+
+var searchSaveCity = function (e) {
+  getCurrent(e.target.textContent);
+};
+
+var renderPreviousCities = function () {
+  var previousCities = JSON.parse(localStorage.getItem("city")) || [];
+
+  for (i = 0; i < previousCities.length; i++) {
+    displayCitySearch(previousCities[i]);
+  }
+};
+
+document
+  .querySelector("#search-list")
+  .addEventListener("click", searchSaveCity);
+
+renderPreviousCities();
