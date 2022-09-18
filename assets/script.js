@@ -100,19 +100,27 @@ function displayForecast(data) {
     var forecastCardBody1 = document.createElement("div");
     forecastCardBody1.setAttribute("class", "forecast-body");
 
+    var futureDate = document.createElement("p");
+    futureDate.setAttribute("class", "weatherEl");
     var futureTemp = document.createElement("p");
     futureTemp.setAttribute("class", "weatherEl");
     var futureHumidity = document.createElement("p");
     futureHumidity.setAttribute("class", "weatherEl");
     var futureWind = document.createElement("p");
     futureWind.setAttribute("class", "weatherEl");
-    futureTemp.textContent = `Temperature: ${data.list[i].main.temp}`;
 
+    futureDate.textContent = `${data.list[i].dt_txt}`;
+    futureTemp.textContent = `Temperature: ${data.list[i].main.temp}`;
     futureHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
     futureWind.textContent = `Wind Speed: ${data.list[i].wind.speed} MPH`;
 
     // append info to cards
-    forecastCardBody1.append(futureTemp, futureHumidity, futureWind);
+    forecastCardBody1.append(
+      futureDate,
+      futureTemp,
+      futureHumidity,
+      futureWind
+    );
     forecastCard1.append(forecastCardBody1);
     forecastContainer.append(forecastCard1);
   }
