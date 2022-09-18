@@ -15,17 +15,17 @@ function getCurrent(city) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
-  
+
   fetch(requestUrlCurrent)
     .then(function (response) {
       return response.json();
     })
     .then((data) => {
       console.log(data);
-      
+
       var lon = data.coord.lon;
       var lat = data.coord.lat;
-      
+
       displayCurrent(data);
       getForecast(lon, lat);
     });
@@ -86,9 +86,8 @@ function getForecast(lon, lat) {
       displayForecast(data);
     });
 }
-// function to display forecast info & create cards for 5-day forecast w/ information on each card
-// display date, icon of weather, temp, wind speed, humidity
-// for loop to display only for next 5 days
+/* function to display forecast info & create cards for 5-day forecast w/ information on each card  
+(display date, icon of weather, temp, wind speed, humidity). Then run for loop to display only for next 5 days */
 function displayForecast(data) {
   // for loop to only call next 5 days (not all 40)
   var forecastContainer = document.querySelector(".forecast-info");
@@ -119,39 +118,26 @@ function displayForecast(data) {
   }
 }
 
-// city added to search history (list)
-// click on city in search history --> current & future conditions added to page again
-// UV index --> color indicates if conditions are favorable, moderate, or severe
-
+/* when fetch button is clicked, save the value of what the user types into the search bar
+and run the getCurrent, saveCity, and displayCitySearch functions passing userInput */
 fetchButton.addEventListener("click", (event) => {
   event.preventDefault();
   var userInput = document.querySelector(".search-city").value;
 
   getCurrent(userInput);
-  // savedCities.push(userInput);
   saveCity(userInput);
   displayCitySearch(userInput);
 });
-/*push the city into the array
-    display the city list
-    run the save city function*/
 
-/* save city function that uses saved city list array as parameter and 
-set the array to local storage */
-
+/* function that gets the savedCities array from local storage, pushes userInput (city typed and searched) 
+into the savedCities array, and then sets the savedCities array to local storage again*/
 var saveCity = function (userInput) {
-  // localStorage.setItem("city", JSON.stringify(savedCities));
-
   savedCities = JSON.parse(localStorage.getItem("city")) || [];
   savedCities.push(userInput);
   localStorage.setItem("city", JSON.stringify(savedCities));
-  // for (var i = 0; i < savedCities.length; i++) {
-  //   displayCitySearch(savedCities[i]);
-  // }
 };
 
-//function to display the array to the page (append)
-
+//function to display the array to the page (append list items to search list element)
 var displayCitySearch = function (city) {
   var listItem = document.createElement("li");
   listItem.className = "list-item";
@@ -159,10 +145,14 @@ var displayCitySearch = function (city) {
   searchListElement.append(listItem);
 };
 
+/* function to display text content of getCurrent function (current weather conditions) 
+when saved city is clicked in the list on the left side of the page */
 var searchSaveCity = function (e) {
   getCurrent(e.target.textContent);
 };
 
+/* function to get the array of city searches submitted by user & run through it via for loop and 
+calling displayCitySearch function of that array to display the list of cities onto the page in search history */
 var renderPreviousCities = function () {
   var previousCities = JSON.parse(localStorage.getItem("city")) || [];
 
@@ -171,8 +161,12 @@ var renderPreviousCities = function () {
   }
 };
 
+/* event listener added for when user clicks on saved item on left side of the page, 
+it will run the searchSaveCity function to display text content of getCurrent function 
+(current weather conditions) */
 document
   .querySelector("#search-list")
   .addEventListener("click", searchSaveCity);
 
+// run renderPreviousCities function
 renderPreviousCities();
