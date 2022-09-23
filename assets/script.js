@@ -14,6 +14,7 @@ function getCurrent(city) {
   var requestUrlCurrent =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
+    "&units=imperial" +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
 
   fetch(requestUrlCurrent)
@@ -59,7 +60,7 @@ function displayCurrent(data) {
   var wind = document.createElement("p");
   wind.setAttribute("class", "weatherEl");
   // var UV = document.createElement("p").setAttribute("class", "weatherEl");
-  temp.textContent = `Temperature: ${data.main.temp}`;
+  temp.textContent = `Temperature: ${data.main.temp} °F`;
   humidity.textContent = `Humidity: ${data.main.humidity} %`;
   wind.textContent = `Wind Speed: ${data.wind.speed} MPH`;
   cardBody.append(temp, humidity, wind);
@@ -75,6 +76,7 @@ function getForecast(lon, lat) {
     lon +
     "&lat=" +
     lat +
+    "&units=imperial" +
     "&appid=4cba12a73385abcc9d4e2c74697fadfa";
 
   fetch(requestUrlForecast)
@@ -89,11 +91,12 @@ function getForecast(lon, lat) {
 /* function to display forecast info & create cards for 5-day forecast w/ information on each card  
 (display date, icon of weather, temp, wind speed, humidity). Then run for loop to display only for next 5 days */
 function displayForecast(data) {
-  // for loop to only call next 5 days (not all 40)
+  console.log(data);
+  // for loop to only call next 5 days (not all 40), starting index at 3rd element and going every 8th one to ensure displaying 5 days
   var forecastContainer = document.querySelector(".forecast-info");
   forecastContainer.innerHTML = "";
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 3; i < data.list.length; i += 8) {
     // create 5 cards
     var forecastCard1 = document.createElement("div");
     forecastCard1.setAttribute("class", "forecast-card");
@@ -102,6 +105,19 @@ function displayForecast(data) {
 
     var futureDate = document.createElement("p");
     futureDate.setAttribute("class", "weatherEl");
+    var futureDateInfo = `${data.list[i].dt_txt}`;
+
+    // code to display weather icon
+    // var futureIcon = document.createElement("p");
+    // futureIcon.innerHTML = "";
+    var futureIconImg = document.createElement("img");
+    futureIconImg.setAttribute(
+      "src",
+      "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
+    );
+    console.log(data.list[i].weather[0].icon);
+    // futureIcon.append(futureIconImg);
+
     var futureTemp = document.createElement("p");
     futureTemp.setAttribute("class", "weatherEl");
     var futureHumidity = document.createElement("p");
@@ -109,14 +125,15 @@ function displayForecast(data) {
     var futureWind = document.createElement("p");
     futureWind.setAttribute("class", "weatherEl");
 
-    futureDate.textContent = `${data.list[i].dt_txt}`;
-    futureTemp.textContent = `Temperature: ${data.list[i].main.temp}`;
+    futureDate.textContent = moment(futureDateInfo).format("MMMM Do, YYYY");
+    futureTemp.textContent = `Temperature: ${data.list[i].main.temp} °F`;
     futureHumidity.textContent = `Humidity: ${data.list[i].main.humidity} %`;
     futureWind.textContent = `Wind Speed: ${data.list[i].wind.speed} MPH`;
 
     // append info to cards
     forecastCardBody1.append(
       futureDate,
+      futureIconImg,
       futureTemp,
       futureHumidity,
       futureWind
