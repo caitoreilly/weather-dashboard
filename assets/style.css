@@ -1,18 +1,22 @@
 .title-bar {
-    background-color: blue;
+  background-color: blue;
 }
 .top {
-    font-size: 30px;
-    text-align: center;
-    color: white;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+}
 
+.text-center {
+  font-size: 20px;
 }
 
 .forecast-card {
-    border: 2px solid black;
+  border: 2px solid black;
+  margin: 5px;
 }
 
 .forecast-info {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }

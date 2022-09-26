@@ -59,7 +59,6 @@ function displayCurrent(data) {
   humidity.setAttribute("class", "weatherEl");
   var wind = document.createElement("p");
   wind.setAttribute("class", "weatherEl");
-  // var UV = document.createElement("p").setAttribute("class", "weatherEl");
   temp.textContent = `Temperature: ${data.main.temp} °F`;
   humidity.textContent = `Humidity: ${data.main.humidity} %`;
   wind.textContent = `Wind Speed: ${data.wind.speed} MPH`;
@@ -107,16 +106,14 @@ function displayForecast(data) {
     futureDate.setAttribute("class", "weatherEl");
     var futureDateInfo = `${data.list[i].dt_txt}`;
 
-    // code to display weather icon
-    // var futureIcon = document.createElement("p");
-    // futureIcon.innerHTML = "";
     var futureIconImg = document.createElement("img");
     futureIconImg.setAttribute(
       "src",
-      "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
+      "https://openweathermap.org/img/w/" +
+        data.list[i].weather[0].icon +
+        ".png"
     );
     console.log(data.list[i].weather[0].icon);
-    // futureIcon.append(futureIconImg);
 
     var futureTemp = document.createElement("p");
     futureTemp.setAttribute("class", "weatherEl");
