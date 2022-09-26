@@ -2,7 +2,7 @@
 
 ---
 
-The goal of this assignment was to create a weather dashboard web application, utilize an API key to fetch and retrieve weather data from the Open Weather server-side API, and display both the current and future weather conditions for a city the user searched for on the page. Click to access my weather dashboard web application [here]().
+The goal of this assignment was to create a weather dashboard web application, utilize an API key to fetch and retrieve weather data from the Open Weather server-side API, and display both the current and future weather conditions for a city the user searched for on the page. Click to access my weather dashboard web application [here](https://caitoreilly.github.io/weather-dashboard/).
 
 ## Description
 
